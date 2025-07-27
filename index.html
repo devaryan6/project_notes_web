@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Notes by Aryan</title>
+    <meta name="description" content="Modern responsive notes app with dark/light theme, priority system, and export functionality. Built with vanilla HTML, CSS & JavaScript.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-feather-alt"></i>
+                    Vibe Notes
+                </h1>
+                <div class="header-controls">
+                    <button class="btn btn-icon" id="viewToggle" title="Toggle View">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="btn btn-icon" id="themeToggle" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="btn btn-icon" id="exportBtn" title="Export Notes">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button class="btn btn-icon" id="importBtn" title="Import Notes">
+                        <i class="fas fa-upload"></i>
+                    </button>
+                    <button class="btn btn-icon" id="aboutBtn" title="About Developer">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search and Filters -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search notes..." autocomplete="off">
+                </div>
+                <div class="filters">
+                    <select id="priorityFilter" class="filter-select">
+                        <option value="">All Priorities</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="updated">Last Updated</option>
+                        <option value="created">Date Created</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Note Form -->
+            <div class="note-form-container" id="noteFormContainer">
+                <form class="note-form" id="noteForm">
+                    <div class="form-header">
+                        <h3 id="formTitle">Create New Note</h3>
+                        <button type="button" class="btn btn-icon" id="closeForm" title="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" id="noteTitle" placeholder="Note title..." maxlength="50" required>
+                        <div class="char-counter">
+                            <span id="titleCounter">0</span>/50
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="noteContent" placeholder="Write your note..." rows="6" required></textarea>
+                        <div class="char-counter">
+                            <span id="contentCounter">0</span> characters
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="notePriority" class="filter-select">
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Note</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Notes Container -->
+            <div class="notes-section">
+                <div class="notes-header">
+                    <div class="notes-count">
+                        <span id="notesCount">0 notes</span>
+                    </div>
+                    <button class="btn btn-primary" id="addNoteBtn">
+                        <i class="fas fa-plus"></i> Add Note
+                    </button>
+                </div>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-illustration">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3>No notes yet</h3>
+                    <p>Create your first note to get started</p>
+                    <button class="btn btn-primary" id="emptyAddBtn">
+                        <i class="fas fa-plus"></i> Create Note
+                    </button>
+                </div>
+
+                <div class="notes-container" id="notesContainer"></div>
+            </div>
+        </main>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Confirm Delete</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this note? This action cannot be undone.</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelDelete">Cancel</button>
+                    <button class="btn btn-danger" id="confirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- About Developer Modal -->
+        <div class="modal-overlay" id="aboutModalOverlay">
+            <div class="modal about-modal">
+                <div class="modal-header">
+                    <h3>About the Developer</h3>
+                    <button type="button" class="btn btn-icon" id="closeAboutModal" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body about-body">
+                    <img src="https://avatars.githubusercontent.com/u/100469992?v=4" alt="Aryan Parmar">
+                    <h4 class="dev-name">Aryan Parmar</h4>
+                    <p class="dev-role">Vibe Coder | Frontend Enthusiast</p>
+                    <p class="dev-bio">Hey, I'm Aryan Parmar — just a Vibe Coder from Surat, Gujarat, crafting pixels with purpose and turning ideas into clean, creative front-end interfaces. I enjoy mixing design with logic using HTML, CSS, and JavaScript to bring smooth user experiences to life. Always experimenting, always vibing ✨</p>
+                    
+                    <h4>Tech Stack I vibe with:</h4>
+                    <ul class="tech-stack">
+                        <li>HTML5</li><li>CSS3</li><li>JavaScript (Vanilla + DOM)</li>
+                        <li>Responsive Design</li><li>Bootstrap</li><li>Tailwind CSS</li>
+                        <li>UI/UX Basics</li><li>Git & GitHub</li><li>Aesthetic UIs</li>
+                    </ul>
+
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:aryangit3@gmail.com">aryangit3@gmail.com</a></p>
+                        <p><i class="fas fa-phone"></i> <a href="tel:+919601347454">+91 96013 47454</a></p>
+                        <p><i class="fas fa-map-marker-alt"></i> Surat, Gujarat, India</p>
+                        <p><i class="fab fa-github"></i> <a href="https://github.com/aryanparmar-dev" target="_blank" rel="noopener noreferrer">github.com/aryanparmar-dev</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -3,29 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Notes by Aryan - Modern Web Notes App</title>
-    <meta name="description" content="Modern responsive notes app with dark/light theme, priority system, and export functionality. Built with vanilla HTML, CSS & JavaScript.">
-    <meta name="keywords" content="notes app, web notes, HTML CSS JavaScript, responsive design, dark theme, note taking, productivity app">
-    <meta name="author" content="Aryan Parmar">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Vibe Notes - Modern Web Notes Application">
-    <meta property="og:description" content="Beautiful, responsive notes app with advanced features like priority tagging and theme switching.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://devaryan6.github.io/project_notes_web/styles.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:text/plain;base64,8J+TnA==">
-    
-    <!-- Google Fonts -->
+    <title>Vibe Notes – Modern Notes App</title>
+    <meta name="description" content="Vibe Notes – A modern, beautiful notes app with pastel vibes, dark/light themes, and productivity superpowers.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <!-- Inter & Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- External CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -34,12 +19,12 @@
         <header class="header">
             <div class="header-content">
                 <h1 class="app-title">
-                    <i class="fas fa-feather-alt"></i>
+                    <i class="fas fa-sticky-note"></i>
                     Vibe Notes
                 </h1>
                 <div class="header-controls">
                     <button class="btn btn-icon" id="viewToggle" title="Toggle View" aria-label="Toggle between grid and list view">
-                        <i class="fas fa-th-large"></i>
+                        <i class="fas fa-th"></i>
                     </button>
                     <button class="btn btn-icon" id="themeToggle" title="Toggle Theme" aria-label="Switch between light and dark theme">
                         <i class="fas fa-moon"></i>
@@ -47,7 +32,7 @@
                     <button class="btn btn-icon" id="exportBtn" title="Export Notes" aria-label="Export all notes to JSON file">
                         <i class="fas fa-download"></i>
                     </button>
-                    <input type="file" id="importFile" accept=".json" style="display: none;" aria-label="Import notes file">
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
                     <button class="btn btn-icon" id="importBtn" title="Import Notes" aria-label="Import notes from JSON file">
                         <i class="fas fa-upload"></i>
                     </button>
@@ -63,7 +48,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="text" id="searchInput" placeholder="Search notes..." autocomplete="off" aria-label="Search through your notes">
+                    <input type="text" id="searchInput" placeholder="Search notes..." autocomplete="off" aria-label="Search your notes">
                 </div>
                 <div class="filters">
                     <select id="priorityFilter" class="filter-select" aria-label="Filter by priority">
@@ -81,7 +66,6 @@
             </div>
         </section>
 
-        <!-- Main Content -->
         <main class="main-content">
             <!-- Note Form -->
             <section class="note-form-container" id="noteFormContainer" aria-label="Note creation form">
@@ -92,26 +76,22 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="noteTitle" class="sr-only">Note Title</label>
-                        <input type="text" id="noteTitle" placeholder="Note title..." maxlength="50" required aria-describedby="titleCounter">
+                        <input type="text" id="noteTitle" placeholder="Title..." maxlength="50" required>
                         <div class="char-counter" id="titleCounterContainer">
-                            <span id="titleCounter" role="status" aria-live="polite">0</span>/50
+                            <span id="titleCounter" aria-live="polite">0</span>/50
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="noteContent" class="sr-only">Note Content</label>
-                        <textarea id="noteContent" placeholder="Write your note..." rows="6" required aria-describedby="contentCounter"></textarea>
+                        <textarea id="noteContent" placeholder="Your ideas..." rows="6" required></textarea>
                         <div class="char-counter" id="contentCounterContainer">
-                            <span id="contentCounter" role="status" aria-live="polite">0</span> characters
+                            <span id="contentCounter" aria-live="polite">0</span> characters
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="notePriority" class="sr-only">Note Priority</label>
-                        <select id="notePriority" class="filter-select" aria-label="Select note priority">
+                        <select id="notePriority" class="filter-select" aria-label="Note priority">
                             <option value="low">Low Priority</option>
                             <option value="medium">Medium Priority</option>
                             <option value="high">High Priority</option>
@@ -125,34 +105,29 @@
                 </form>
             </section>
 
-            <!-- Notes Container -->
             <section class="notes-section" aria-label="Your notes">
                 <div class="notes-header">
-                    <div class="notes-count" role="status" aria-live="polite">
-                        <span id="notesCount">0 notes</span>
-                    </div>
-                    <button class="btn btn-primary" id="addNoteBtn" aria-label="Create a new note">
-                        <i class="fas fa-plus" aria-hidden="true"></i> Add Note
+                    <div class="notes-count" id="notesCount" aria-live="polite">0 notes</div>
+                    <button class="btn btn-primary" id="addNoteBtn" aria-label="Create Note">
+                        <i class="fas fa-plus"></i> Add Note
                     </button>
                 </div>
-
-                <div class="empty-state" id="emptyState" role="img" aria-label="No notes available">
+                <div class="empty-state" id="emptyState" role="img" aria-label="No notes yet">
                     <div class="empty-illustration">
-                        <i class="fas fa-folder-open" aria-hidden="true"></i>
+                        <i class="fas fa-folder-open"></i>
                     </div>
                     <h3>No notes yet</h3>
                     <p>Create your first note to get started</p>
-                    <button class="btn btn-primary" id="emptyAddBtn" aria-label="Create your first note">
-                        <i class="fas fa-plus" aria-hidden="true"></i> Create Note
+                    <button class="btn btn-primary" id="emptyAddBtn">
+                        <i class="fas fa-plus"></i> Create Note
                     </button>
                 </div>
-
-                <div class="notes-container" id="notesContainer" role="grid" aria-label="Notes grid"></div>
+                <div class="notes-container" id="notesContainer" role="grid"></div>
             </section>
         </main>
 
         <!-- Toast Notifications -->
-        <div class="toast-container" id="toastContainer" role="log" aria-live="polite" aria-label="Notifications"></div>
+        <div class="toast-container" id="toastContainer" role="log" aria-live="polite"></div>
 
         <!-- Confirmation Modal -->
         <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
@@ -175,7 +150,7 @@
             <div class="modal about-modal">
                 <div class="modal-header">
                     <h3 id="aboutModalTitle">About the Developer</h3>
-                    <button type="button" class="btn btn-icon" id="closeAboutModal" title="Close about dialog" aria-label="Close about developer dialog">
+                    <button type="button" class="btn btn-icon" id="closeAboutModal" title="Close" aria-label="Close about developer dialog">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -186,59 +161,23 @@
                     <p class="dev-bio">Hey, I'm Aryan Parmar — just a Vibe Coder from Surat, Gujarat, crafting pixels with purpose and turning ideas into clean, creative front-end interfaces. I enjoy mixing design with logic using HTML, CSS, and JavaScript to bring smooth user experiences to life. Always experimenting, always vibing ✨</p>
                     
                     <h4>Tech Stack I vibe with:</h4>
-                    <ul class="tech-stack" role="list">
+                    <ul class="tech-stack">
                         <li>HTML5</li><li>CSS3</li><li>JavaScript (Vanilla + DOM)</li>
                         <li>Responsive Design</li><li>Bootstrap</li><li>Tailwind CSS</li>
                         <li>UI/UX Basics</li><li>Git & GitHub</li><li>Aesthetic UIs</li>
                     </ul>
 
                     <div class="contact-info">
-                        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:aryangit3@gmail.com" rel="noopener">aryangit3@gmail.com</a></p>
-                        <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+919601347454" rel="noopener">+91 96013 47454</a></p>
-                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> <span>Surat, Gujarat, India</span></p>
-                        <p><i class="fab fa-github" aria-hidden="true"></i> <a href="https://github.com/devaryan6" target="_blank" rel="noopener noreferrer">github.com/devaryan6</a></p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:aryangit3@gmail.com">aryangit3@gmail.com</a></p>
+                        <p><i class="fas fa-phone"></i> <a href="tel:+919601347454">+91 96013 47454</a></p>
+                        <p><i class="fas fa-map-marker-alt"></i> Surat, Gujarat, India</p>
+                        <p><i class="fab fa-github"></i> <a href="https://github.com/devaryan6" target="_blank" rel="noopener noreferrer">github.com/devaryan6</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading Indicator -->
-    <div id="loadingIndicator" class="loading-indicator" style="display: none;" role="status" aria-label="Loading">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- External JavaScript -->
     <script src="script.js"></script>
-    
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Vibe Notes",
-        "description": "Modern responsive notes application with dark/light theme switching and advanced features",
-        "url": "https://devaryan6.github.io/project_notes_web/script.js",
-        "applicationCategory": "Productivity",
-        "operatingSystem": "Web Browser",
-        "author": {
-            "@type": "Person",
-            "name": "Aryan Parmar",
-            "email": "aryangit3@gmail.com",
-            "jobTitle": "Frontend Developer",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Surat",
-                "addressRegion": "Gujarat",
-                "addressCountry": "India"
-            }
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        }
-    }
-    </script>
 </body>
 </html>

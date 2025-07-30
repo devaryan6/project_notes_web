@@ -268,8 +268,15 @@ class NotesApp {
     toggleView() {
         this.isGridView = !this.isGridView;
         this.notesContainer.classList.toggle('list-view', !this.isGridView);
-        this.viewToggle.querySelector('i').className = this.isGridView ? 'fas fa-th-large' : 'fas fa-list';
-        this.viewToggle.title = this.isGridView ? 'Switch to List View' : 'Switch to Grid View';
+        // Change the icon for user feedback
+        const icon = this.viewToggle.querySelector('i');
+        if (this.isGridView) {
+            icon.className = "fas fa-th";
+            this.viewToggle.setAttribute("aria-pressed", "false");
+        } else {
+            icon.className = "fas fa-list";
+            this.viewToggle.setAttribute("aria-pressed", "true");
+        }
     }
 
     toggleTheme() {
@@ -378,4 +385,4 @@ class NotesApp {
 }
 
 // Initialize the app
-const app = new NotesApp();
+window.app = new NotesApp();
